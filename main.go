@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"google.golang.org/grpc"
 	"net"
+	"schedule/dao/mongodb"
+	"schedule/dao/zookeeper"
 	"schedule/util/config"
 	"schedule/util/log"
 )
@@ -30,6 +32,13 @@ func main() {
 }
 func initServer(ctx context.Context, path string) {
 	if err := config.InitConfig(path); err != nil {
+		panic(err)
+	}
+
+	if err := mongodb.InitMongodb(); err != nil {
+		panic(err)
+	}
+	if err := zookeeper.InitZookeeper(); err != nil {
 		panic(err)
 	}
 }
